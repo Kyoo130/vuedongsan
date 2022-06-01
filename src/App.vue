@@ -1,11 +1,14 @@
 <template>
   <div id="app">
-    <MoDal :oneRooms="oneRooms" :clickInfo="clickInfo" :modalOpen="modalOpen"/>
+    <transition name="fade">
+      <MoDal @closeModal="modalInfo = false" :oneRooms="oneRooms" :clickInfo="clickInfo" :modalOpen="modalInfo"/>
+    </transition>
 
     <div class="menu">
       <a v-for="(item, idx) in menu" :key="idx">{{ item }}</a>
     </div>
 
+    <DisCount/>
     <Card @openModal="modalInfo = true; clickInfo = $event" :oneRoom="oneRooms[i]" v-for="(item, i) in oneRooms"
           :key="i"/>
   </div>
@@ -15,6 +18,7 @@
 import oneRoomData from "@/assets/oneRoom";
 import MoDal from "@/components/Modal";
 import Card from "@/components/Card";
+import DisCount from "@/components/DisCount";
 
 export default {
   name: 'App',
@@ -31,7 +35,7 @@ export default {
       this.report += 1;
     }
   },
-  components: {Card, MoDal}
+  components: {DisCount, Card, MoDal}
 }
 </script>
 
@@ -64,6 +68,16 @@ body {
   padding: 10px;
   text-decoration: none;
   font-weight: bold;
+}
+
+.fade-enter-from {
+  opacity: 0;
+}
+.fade-enter-active {
+  transition: all 1s;
+}
+.fade-enter-to {
+  opacity: 1;
 }
 
 </style>
