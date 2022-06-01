@@ -8,7 +8,8 @@
       <a v-for="(item, idx) in menu" :key="idx">{{ item }}</a>
     </div>
 
-    <DisCount/>
+
+    <DisCount v-if="showDiscount === true"/>
 
     <button @click="priceSort">정렬</button>
     <button @click="sortBack">되돌리기</button>
@@ -28,6 +29,7 @@ export default {
   name: 'App',
   data() {
     return {
+      showDiscount: true,
       oneRoomsOrigin: [...oneRoomData],
       oneRooms: oneRoomData,
       clickInfo: 0,
@@ -47,6 +49,11 @@ export default {
     sortBack() {
       this.oneRooms = [...this.oneRoomsOrigin]
     }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.showDiscount = false;
+    }, 2000)
   },
   components: {DisCount, Card, MoDal}
 }
