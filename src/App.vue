@@ -9,6 +9,10 @@
     </div>
 
     <DisCount/>
+
+    <button @click="priceSort">정렬</button>
+    <button @click="sortBack">되돌리기</button>
+
     <Card @openModal="modalInfo = true; clickInfo = $event" :oneRoom="oneRooms[i]" v-for="(item, i) in oneRooms"
           :key="i"/>
   </div>
@@ -24,6 +28,7 @@ export default {
   name: 'App',
   data() {
     return {
+      oneRoomsOrigin: [...oneRoomData],
       oneRooms: oneRoomData,
       clickInfo: 0,
       modalInfo: false,
@@ -33,6 +38,14 @@ export default {
   methods: {
     increase() {
       this.report += 1;
+    },
+    priceSort() {
+      this.oneRooms.sort(function (a, b) {
+        return a.price - b.price
+      })
+    },
+    sortBack() {
+      this.oneRooms = [...this.oneRoomsOrigin]
     }
   },
   components: {DisCount, Card, MoDal}
@@ -73,9 +86,11 @@ body {
 .fade-enter-from {
   opacity: 0;
 }
+
 .fade-enter-active {
   transition: all 1s;
 }
+
 .fade-enter-to {
   opacity: 1;
 }
